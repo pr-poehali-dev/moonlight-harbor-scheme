@@ -1,6 +1,12 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 
+const stats = [
+  { value: "№ 14", label: "Выпуск" },
+  { value: "8 апр", label: "Дата" },
+  { value: "6 мин", label: "Читать" },
+];
+
 export default function Hero() {
   const container = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -35,10 +41,20 @@ export default function Hero() {
           <span className="block text-white">ТЕХНОЛОГИИ.</span>
           <span className="block glow-cyan text-cyan-400">ДАЙДЖЕСТ.</span>
         </h1>
-        <p className="text-base md:text-lg max-w-xl mx-auto text-white/60 leading-relaxed font-light">
+        <p className="text-base md:text-lg max-w-xl mx-auto text-white/60 leading-relaxed font-light mb-12">
           Еженедельный обзор ИТ-событий компании — инфраструктура, безопасность, релизы и тренды
         </p>
-        <div className="mt-10 flex items-center justify-center gap-4">
+
+        <div className="flex items-center justify-center gap-0 border border-white/10 divide-x divide-white/10 w-fit mx-auto mb-10">
+          {stats.map((s) => (
+            <div key={s.label} className="px-8 py-4 text-center">
+              <p className="text-mono text-cyan-400 text-lg font-bold">{s.value}</p>
+              <p className="text-white/40 text-xs uppercase tracking-widest mt-1">{s.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-center gap-4">
           <div className="w-8 h-px bg-cyan-400/50"></div>
           <span className="text-mono text-cyan-400/60 text-xs tracking-widest">SCROLL</span>
           <div className="w-8 h-px bg-cyan-400/50"></div>

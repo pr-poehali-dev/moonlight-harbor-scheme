@@ -1,6 +1,13 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 
+const metrics = [
+  { value: "99.7%", label: "Uptime платформ за квартал" },
+  { value: "47", label: "Задач закрыто за неделю" },
+  { value: "12 сек", label: "Среднее время ответа API" },
+  { value: "0", label: "Критических инцидентов" },
+];
+
 export default function Promo() {
   const container = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -28,10 +35,19 @@ export default function Promo() {
       </div>
 
       <p className="text-mono absolute top-12 left-6 text-cyan-400/60 uppercase z-10 text-xs tracking-[0.3em]">
-        Smart Horizon · {new Date().getFullYear()}
+        Smart Horizon · Неделя {new Date().getFullYear()}
       </p>
 
-      <p className="absolute bottom-12 left-6 right-6 text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl max-w-4xl z-10 font-black leading-tight">
+      <div className="absolute top-1/2 -translate-y-1/2 left-6 right-6 z-10 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 max-w-4xl mx-auto">
+        {metrics.map((m) => (
+          <div key={m.label} className="bg-[#050d1a]/80 backdrop-blur-sm px-6 py-8 text-center">
+            <p className="text-mono text-cyan-400 text-3xl md:text-4xl font-black glow-cyan">{m.value}</p>
+            <p className="text-white/40 text-xs mt-2 leading-snug">{m.label}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="absolute bottom-12 left-6 right-6 text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl max-w-4xl z-10 font-black leading-tight">
         Умные решения для финансового рынка —<br />
         <span className="text-cyan-400">мы строим цифровой горизонт</span>
       </p>
