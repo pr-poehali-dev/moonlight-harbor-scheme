@@ -48,15 +48,12 @@ async function downloadDigest() {
   if (btn) { btn.textContent = "Генерация..."; btn.disabled = true; }
   try {
     const res = await fetch(PDF_URL);
-    const b64 = await res.text();
-    const binary = atob(b64.replace(/"/g, ""));
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    const blob = new Blob([bytes], { type: "application/pdf" });
+    const html = await res.json();
+    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "SmartHorizon_IT_Digest_14.pdf";
+    a.download = "SmartHorizon_IT_Digest_14.html";
     a.click();
     URL.revokeObjectURL(url);
   } finally {
