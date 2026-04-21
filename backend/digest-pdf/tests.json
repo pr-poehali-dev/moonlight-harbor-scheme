@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Генерация PDF-дайджеста",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "bodyMatcher": "partial",
+      "expectedBody": {}
+    }
+  ]
+}

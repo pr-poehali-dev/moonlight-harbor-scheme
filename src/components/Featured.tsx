@@ -41,6 +41,29 @@ const topics = [
   },
 ];
 
+const PDF_URL = "https://functions.poehali.dev/3d1ba64e-bb0d-439c-a4db-4aabcfd8dde8";
+
+async function downloadDigest() {
+  const btn = document.getElementById("digest-btn") as HTMLButtonElement;
+  if (btn) { btn.textContent = "Генерация..."; btn.disabled = true; }
+  try {
+    const res = await fetch(PDF_URL);
+    const b64 = await res.text();
+    const binary = atob(b64.replace(/"/g, ""));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const blob = new Blob([bytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "SmartHorizon_IT_Digest_14.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+  } finally {
+    if (btn) { btn.textContent = "Читать выпуск →"; btn.disabled = false; }
+  }
+}
+
 export default function Featured() {
   return (
     <div className="min-h-screen bg-[#070f1c] px-6 py-20 lg:py-32 grid-bg">
@@ -86,7 +109,11 @@ export default function Featured() {
           <p className="text-white/30 text-sm font-light">
             Выходит каждую неделю · Smart Horizon ИТ-Департамент
           </p>
-          <button className="text-mono text-cyan-400 border border-cyan-400/30 px-6 py-2.5 text-xs uppercase tracking-widest hover:bg-cyan-400/10 transition-all duration-300">
+          <button
+            id="digest-btn"
+            onClick={downloadDigest}
+            className="text-mono text-cyan-400 border border-cyan-400/30 px-6 py-2.5 text-xs uppercase tracking-widest hover:bg-cyan-400/10 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             Читать выпуск →
           </button>
         </div>
