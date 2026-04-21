@@ -306,12 +306,60 @@ def build_html() -> str:
   .footer-info p { font-size: 11px; color: var(--gray); font-weight: 300; }
   .footer-info a { color: var(--cyan); text-decoration: none; }
 
+  /* ── КНОПКА ПЕЧАТИ ── */
+  .print-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(2,8,16,0.95);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(8px);
+  }
+  .print-bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gray);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .print-btn {
+    background: var(--cyan);
+    color: #000;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 24px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: opacity 0.15s;
+  }
+  .print-btn:hover { opacity: 0.85; }
+
+  body { padding-top: 52px; }
+
   @media print {
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      padding-top: 0;
+    }
+    .print-bar { display: none; }
   }
 </style>
 </head>
 <body>
+
+<!-- ПАНЕЛЬ ПЕЧАТИ -->
+<div class="print-bar">
+  <span class="print-bar-label">Smart Horizon · ИТ-Дайджест · Выпуск №14</span>
+  <button class="print-btn" onclick="window.print()">Сохранить как PDF</button>
+</div>
 
 <!-- ШАПКА -->
 <div class="header">

@@ -45,17 +45,16 @@ const PDF_URL = "https://functions.poehali.dev/3d1ba64e-bb0d-439c-a4db-4aabcfd8d
 
 async function downloadDigest() {
   const btn = document.getElementById("digest-btn") as HTMLButtonElement;
-  if (btn) { btn.textContent = "Генерация..."; btn.disabled = true; }
+  if (btn) { btn.textContent = "Загрузка..."; btn.disabled = true; }
   try {
     const res = await fetch(PDF_URL);
     const html = await res.json();
-    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "SmartHorizon_IT_Digest_14.html";
-    a.click();
-    URL.revokeObjectURL(url);
+    const tab = window.open("", "_blank");
+    if (tab) {
+      tab.document.open();
+      tab.document.write(html);
+      tab.document.close();
+    }
   } finally {
     if (btn) { btn.textContent = "Читать выпуск →"; btn.disabled = false; }
   }
